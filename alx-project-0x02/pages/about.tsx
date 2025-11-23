@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import Header from '../components/layout/Header';
-import Button from '@/components/common/Button'; // <-- UPDATED TO USE ALIAS
+import Header from '@/components/layout/Header'; // <-- UPDATED TO USE ALIAS
+import Button from '@/components/common/Button'; 
 
 const AboutPage: React.FC = () => {
 
