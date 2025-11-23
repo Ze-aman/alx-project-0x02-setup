@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React, { useState } from 'react';
-import Header from '../components/layout/Header';
-import Card from '@/components/common/Card'; // <-- UPDATED TO USE ALIAS
+import Header from '@/components/layout/Header'; // <-- UPDATED TO USE ALIAS
+import Card from '@/components/common/Card'; 
 import PostModal, { PostData } from '../components/common/PostModal'; // Import PostModal and PostData
 
 const HomePage: React.FC = () => {
