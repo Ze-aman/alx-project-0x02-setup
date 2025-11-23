@@ -45,7 +45,7 @@ export default UsersPage;
  * Function for Static Site Generation (SSG).
  * Fetches data once at build time.
  */
-export const getStaticProps: GetStaticProps<UsersPageProps> = async () => {
+export const getStaticProps(): GetStaticProps<UsersPageProps> = async () => {
   const API_URL = 'https://jsonplaceholder.typicode.com/users';
   
   try {
