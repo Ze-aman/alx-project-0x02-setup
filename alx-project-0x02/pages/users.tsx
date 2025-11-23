@@ -1,14 +1,14 @@
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
-import Header from '../components/layout/Header';
-import UserCard from '../components/common/UserCard'; // Import the new component
-import { UserProps, UsersPageProps } from '../interfaces'; // Import interfaces
+import { type GetStaticProps } from 'next'; // Changed from GetServerSideProps
+import Header from '@/components/layout/Header'; // <-- UPDATED TO USE ALIAS
+import UserCard from '@/components/common/UserCard'; // <-- UPDATED TO USE ALIAS
+import { type UserProps, type UsersPageProps } from '../interfaces'; // <-- UPDATED TO USE 'import type'
 
 const UsersPage: React.FC<UsersPageProps> = ({ users }) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
-        <title>Users (SSR)</title>
+        <title>Users (SSG)</title>
       </Head>
 
       <Header />
@@ -18,7 +18,7 @@ const UsersPage: React.FC<UsersPageProps> = ({ users }) => {
           External API Users
         </h1>
         <p className="mt-2 text-xl text-gray-500 mb-10 text-center">
-          Displaying user data fetched via Server-Side Rendering (GSSP).
+          Displaying user data fetched at **build time** using `getStaticProps` (Static Site Generation).
         </p>
         
         {/* Grid to display UserCards */}
@@ -41,8 +41,11 @@ const UsersPage: React.FC<UsersPageProps> = ({ users }) => {
 
 export default UsersPage;
 
-// Function for Server-Side Rendering (SSR)
-export const getServerSideProps: GetServerSideProps<UsersPageProps> = async () => {
+/**
+ * Function for Static Site Generation (SSG).
+ * Fetches data once at build time.
+ */
+export const getStaticProps: GetStaticProps<UsersPageProps> = async () => {
   const API_URL = 'https://jsonplaceholder.typicode.com/users';
   
   try {
@@ -58,6 +61,8 @@ export const getServerSideProps: GetServerSideProps<UsersPageProps> = async () =
       props: {
         users,
       },
+      // Optional: Regenerate the page every 24 hours (86400 seconds) in production
+      revalidate: 86400, 
     };
 
   } catch (error) {
@@ -67,6 +72,8 @@ export const getServerSideProps: GetServerSideProps<UsersPageProps> = async () =
       props: {
         users: [],
       },
+      // Set to notFound: true to show a 404 page if critical data fails to load
+      // notFound: true, 
     };
   }
 };
